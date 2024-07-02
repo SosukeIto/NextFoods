@@ -7,6 +7,7 @@ interface Post {
   name: string;
   content: string;
   imageUrl?: string;
+  date: string; // 日付を追加
 }
 
 const HomePage = () => {
@@ -18,11 +19,15 @@ const HomePage = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}(${['日', '月', '火', '水', '木', '金', '土'][now.getDay()]}) ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
     const newPostData: Post = {
       id: posts.length + 1,
       name: newPostName,
       content: newPostContent,
-      imageUrl: newPostImage ? URL.createObjectURL(newPostImage) : undefined
+      imageUrl: newPostImage ? URL.createObjectURL(newPostImage) : undefined,
+      date: formattedDate // 日付を追加
     };
 
     setPosts([...posts, newPostData]);
@@ -68,7 +73,7 @@ const HomePage = () => {
       <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
         {posts.map((post) => (
           <li key={post.id} style={{ marginBottom: '10px', padding: '10px', border: '1px solid #ccc' }}>
-            <p>{post.name}</p>
+            <p>名前 : {post.name} ： {post.date}</p>
             <p>{post.content}</p>
             {post.imageUrl && (
               <Image
