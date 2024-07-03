@@ -1,13 +1,15 @@
-"use client";
-import React, { useState, FormEvent } from 'react';
+'use client';
+
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
+import { uploadFile } from './actions';
 
 interface Post {
   id: number;
   name: string;
   content: string;
   imageUrl?: string;
-  date: string; // 日付を追加
+  date: string;
 }
 
 const HomePage = () => {
@@ -15,10 +17,9 @@ const HomePage = () => {
   const [newPostContent, setNewPostContent] = useState<string>('');
   const [newPostName, setNewPostName] = useState<string>('');
   const [newPostImage, setNewPostImage] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-
+  const UploadSubmit = async (formdata: FormData) => {
     const now = new Date();
     const formattedDate = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}(${['日', '月', '火', '水', '木', '金', '土'][now.getDay()]}) ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
@@ -27,20 +28,25 @@ const HomePage = () => {
       name: newPostName,
       content: newPostContent,
       imageUrl: newPostImage ? URL.createObjectURL(newPostImage) : undefined,
-      date: formattedDate // 日付を追加
+      date: formattedDate
     };
 
     setPosts([...posts, newPostData]);
     setNewPostContent('');
     setNewPostName('');
     setNewPostImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+
+    await uploadFile(formdata);
   };
 
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <h1>みんなのご飯録</h1>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+      <form action={UploadSubmit} style={{ marginBottom: '20px' }}>
         <div>
           <input
             type="text"
@@ -62,7 +68,9 @@ const HomePage = () => {
         <div>
           <input
             type="file"
+            name="file"
             accept="image/*"
+            ref={fileInputRef}
             onChange={(e) => setNewPostImage(e.target.files ? e.target.files[0] : null)}
             style={{ padding: '5px', marginTop: '10px' }}
           />
@@ -79,8 +87,8 @@ const HomePage = () => {
               <Image
                 src={post.imageUrl}
                 alt={`Post ${post.id}`}
-                width={500}  // ここに幅を指定
-                height={500} // ここに高さを指定
+                width={500}
+                height={500}
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
             )}
