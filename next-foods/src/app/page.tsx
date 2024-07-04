@@ -18,7 +18,6 @@ const HomePage = () => {
 
   const handlePostSubmit = async (formdata: FormData, newPostData: Post) => {
     setPosts([...posts, newPostData]);
-    console.log(posts)
     await uploadFile(formdata);
   };
 
