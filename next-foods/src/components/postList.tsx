@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import ReplyList from './reply/replyList'
 interface Post {
     id: number;
     name: string;
@@ -12,6 +13,8 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
+    const [replys, setReplys] = useState<Post[]>([]);
+
     return (
         <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
             {posts.map((post) => (
@@ -27,6 +30,8 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
                             style={{ maxWidth: '100%', height: 'auto' }}
                         />
                     )}
+                    <button type="submit" style={{ padding: '10px 20px', marginTop: '10px' }}>返信</button>
+                    <ReplyList posts={posts} />
                 </li>
             ))}
         </ul>
