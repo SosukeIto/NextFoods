@@ -3,7 +3,7 @@ import { promises as fs } from "node:fs";
 import { resolve } from "node:path";
 import { revalidatePath } from "next/cache";
 
-export async function uploadFile(formData: FormData) {
+export async function uploadFile(formData: FormData): Promise<string> {
     const file = formData.get("file") as File;
     if (file && file.size > 0) {
         const data = await file.arrayBuffer();
@@ -14,6 +14,7 @@ export async function uploadFile(formData: FormData) {
             `${crypto.randomUUID()}.${file.name.split(".").pop()}`,
         );
         await fs.writeFile(filePath, buffer);
+        return filePath;
     }
-    revalidatePath("/file");
+    return "";
 }

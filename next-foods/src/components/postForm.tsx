@@ -1,13 +1,10 @@
 import React, { useState, useRef, FormEvent } from 'react';
-interface Post {
-    id: number;
-    name: string;
-    content: string;
-    imageUrl?: string;
-    date: string;
-}
+import { Post } from '../types/post';
+import { uploadFile } from '../modules/uploadFile';
+import {convertDate} from '../modules/convertDate';
+
 interface PostFormProps {
-    onPostSubmit: (formdata: FormData, newPostData: Post) => Promise<void>;
+    onPostSubmit: (newPostData: Post) => Promise<void>;
 }
 
 const PostForm: React.FC<PostFormProps> = ({ onPostSubmit }) => {
@@ -18,24 +15,23 @@ const PostForm: React.FC<PostFormProps> = ({ onPostSubmit }) => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
-        const now = new Date();
-        const formattedDate = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}(${['日', '月', '火', '水', '木', '金', '土'][now.getDay()]}) ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-
-        const newPostData: Post = {
-            id: Date.now(),
-            name: newPostName ? newPostName : "匿名メンバー",
-            content: newPostContent,
-            imageUrl: newPostImage ? URL.createObjectURL(newPostImage) : undefined,
-            date: formattedDate
-        };
-
         const formdata = new FormData();
         if (newPostImage) {
             formdata.append('file', newPostImage);
         }
 
-        await onPostSubmit(formdata, newPostData);
+        const now = new Date();
+        const fileName = await uploadFile(formdata) || "";
+        const formattedDate = await convertDate(now)
+
+        const newPostData: Post = {
+            id: Date.now(),
+            name: newPostName ? newPostName : "匿名メンバー",
+            content: newPostContent,
+            imagePath: fileName ? fileName : undefined,
+            date: formattedDate
+        };
+        await onPostSubmit(newPostData);
 
         setNewPostContent('');
         setNewPostName('');

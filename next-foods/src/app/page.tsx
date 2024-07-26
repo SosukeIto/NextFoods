@@ -3,22 +3,15 @@
 import React, { useState } from 'react';
 import PostForm from '../components/postForm';
 import PostList from '../components/postList';
-import { uploadFile } from './actions';
+import { Post } from '../types/post';
+import { PostListProps } from '../types/PostListProps';
 
-interface Post {
-  id: number;
-  name: string;
-  content: string;
-  imageUrl?: string;
-  date: string;
-}
 
 const HomePage = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]); // 初期値を空配列に設定
 
-  const handlePostSubmit = async (formdata: FormData, newPostData: Post) => {
+  const handlePostSubmit = async (newPostData: Post) => {
     setPosts([...posts, newPostData]);
-    await uploadFile(formdata);
   };
 
   return (
