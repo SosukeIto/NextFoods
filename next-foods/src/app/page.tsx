@@ -4,13 +4,12 @@ import React, { useState } from 'react';
 import PostForm from '../components/postForm';
 import PostList from '../components/postList';
 import { Post } from '../types/post';
-import { PostListProps } from '../types/PostListProps';
-
 
 const HomePage = () => {
   const [posts, setPosts] = useState<Post[]>([]); // 初期値を空配列に設定
 
   const handlePostSubmit = async (newPostData: Post) => {
+    console.log(newPostData)
     setPosts([...posts, newPostData]);
   };
 
