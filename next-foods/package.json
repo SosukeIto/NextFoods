@@ -11,15 +11,21 @@
   "dependencies": {
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
+    "@prisma/client": "^5.17.0",
     "@types/formidable": "^3.4.5",
     "@types/uuid": "^10.0.0",
     "axios": "^1.7.2",
     "formidable": "^3.5.1",
+    "fs": "^0.0.1-security",
+    "mysql": "^2.18.1",
+    "net": "^1.0.2",
     "next": "14.2.4",
+    "prisma": "^5.17.0",
     "react": "^18",
     "react-dom": "^18",
     "styled-components": "^6.1.11",
     "swiper": "^11.1.4",
+    "tls": "^0.0.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
