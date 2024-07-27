@@ -2,6 +2,9 @@ import React, { useState, useRef, FormEvent } from 'react';
 import { Post } from '../types/post';
 import { uploadFile } from '../modules/uploadFile';
 import {convertDate} from '../modules/convertDate';
+import NameInput from './Forms/NameInput';
+import ContentInput from './Forms/ContentInput';
+import FileInput from './Forms/ImageInput'; 
 
 interface PostFormProps {
     onPostSubmit: (newPostData: Post) => Promise<void>;
@@ -43,34 +46,10 @@ const PostForm: React.FC<PostFormProps> = ({ onPostSubmit }) => {
 
     return (
         <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
-            <div>
-                <input
-                    type="text"
-                    value={newPostName}
-                    onChange={(e) => setNewPostName(e.target.value)}
-                    placeholder="名前"
-                    style={{ padding: '5px', width: '300px', marginRight: '10px' }}
-                />
-            </div>
-            <div>
-                <input
-                    type="text"
-                    value={newPostContent}
-                    onChange={(e) => setNewPostContent(e.target.value)}
-                    placeholder="あなたが食べたご飯はなに？"
-                    style={{ padding: '5px', width: '300px', marginRight: '10px' }}
-                />
-            </div>
-            <div>
-                <input
-                    type="file"
-                    name="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={(e) => setNewPostImage(e.target.files ? e.target.files[0] : null)}
-                    style={{ padding: '5px', marginTop: '10px' }}
-                />
-            </div>
+
+            <NameInput name={newPostName} setName={setNewPostName} />
+            <ContentInput content={newPostContent} setContent={setNewPostContent} />
+            <FileInput setFile={setNewPostImage} />
             <button type="submit" style={{ padding: '10px 20px', marginTop: '10px' }}>投稿</button>
         </form>
     );

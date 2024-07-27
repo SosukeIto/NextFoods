@@ -18,7 +18,7 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
                     <p>{post.content}</p>
                     {post.imagePath && (
                         <Image
-                            src={post.imagePath}
+                            src={`/images/${post.imagePath}`}
                             alt={`Post ${post.id}`}
                             width={500}
                             height={500}
