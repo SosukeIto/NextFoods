@@ -1,6 +1,6 @@
 "use server";
 import { PrismaClient } from '@prisma/client';
-import { Post } from './post';
+import { Post } from '@/types/post';
 
 const prisma = new PrismaClient();
 

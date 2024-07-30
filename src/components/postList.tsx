@@ -7,8 +7,6 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
-    //console.log(posts)
-
     return (
         <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
             {posts.map((post) => (
