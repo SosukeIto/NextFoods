@@ -1,11 +1,13 @@
 "use server";
+
+import type { Post } from '@prisma/client';
+
 import { PrismaClient } from '@prisma/client';
-import { Post } from '@/types/post';
 
 const prisma = new PrismaClient();
 
 export async function insertPost(postData: Post) {
-    const { name, content, imageName, date } = postData;
+    const { name, content, imagePath, date } = postData;
     var toString = Object.prototype.toString
     console.log("#################")
     console.log(toString.call(date))
@@ -15,7 +17,7 @@ export async function insertPost(postData: Post) {
             data: {
                 name,
                 content: content,
-                imagePath: "/images/" + imageName,
+                imagePath: "/images/" + imagePath,
                 date
             }
         });

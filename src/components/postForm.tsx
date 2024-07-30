@@ -1,10 +1,10 @@
 import React, { useState, useRef, FormEvent } from 'react';
-import { Post } from '../types/post';
+import type { Post } from '@prisma/client';
 import { uploadFile } from '../modules/uploadFile';
-import {convertDate} from '../modules/convertDate';
+import { convertDate } from '../modules/convertDate';
 import NameInput from './Forms/NameInput';
 import ContentInput from './Forms/ContentInput';
-import FileInput from './Forms/ImageInput'; 
+import FileInput from './Forms/ImageInput';
 
 interface PostFormProps {
     onPostSubmit: (newPostData: Post) => Promise<void>;
@@ -30,8 +30,8 @@ const PostForm: React.FC<PostFormProps> = ({ onPostSubmit }) => {
         const newPostData: Post = {
             id: Date.now(),
             name: newPostName ? newPostName : "匿名メンバー",
-            content: newPostContent? newPostContent : "無題",
-            imageName: fileName ? fileName : null,
+            content: newPostContent ? newPostContent : "無題",
+            imagePath: fileName ? fileName : null,
             date: formattedDate
         };
         await onPostSubmit(newPostData);

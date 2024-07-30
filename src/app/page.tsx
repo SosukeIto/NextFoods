@@ -1,9 +1,10 @@
 'use client';
 
+import type { Post } from '@prisma/client'
+
 import React, { useState, useEffect } from 'react';
 import PostForm from '@/components/postForm';
 import PostList from '@/components/postList';
-import { Post } from '@/types/post';
 import { insertPost } from '@/modules/insertPost';
 import { getAllPosts } from '@/modules/getPosts';
 
@@ -13,7 +14,7 @@ const HomePage = () => {
     const fetchPosts = async () => {
       const postThreads = await getAllPosts();
       console.log(`postThreads: `, postThreads);
-      //インターフェイスではdateはstringと定義しているのに謎error 
+      //インターフェイスではdateはstringと定義しているのに謎error
       setPosts(postThreads);
     };
     fetchPosts();
