@@ -30,7 +30,7 @@ const PostForm: React.FC<PostFormProps> = ({ onPostSubmit }) => {
         const newPostData: Post = {
             id: Date.now(),
             name: newPostName ? newPostName : "匿名メンバー",
-            content: newPostContent,
+            content: newPostContent? newPostContent : "無題",
             imageName: fileName ? fileName : undefined,
             date: formattedDate
         };

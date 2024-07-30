@@ -1,7 +1,6 @@
 "use server";
 import { promises as fs } from "node:fs";
 import { resolve } from "node:path";
-import { revalidatePath } from "next/cache";
 import crypto from "node:crypto";
 
 export async function uploadFile(formData: FormData): Promise<string> {
