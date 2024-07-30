@@ -1,24 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
-import PostForm from '../components/postForm';
-import PostList from '../components/postList';
-import { uploadFile } from './actions';
-
-interface Post {
-  id: number;
-  name: string;
-  content: string;
-  imageUrl?: string;
-  date: string;
-}
+import React, { useState, useEffect } from 'react';
+import PostForm from '@/components/postForm';
+import PostList from '@/components/postList';
+import { Post } from '@/types/post';
+import { insertPost } from '@/types/insertPost';
+import { getAllPosts } from '@/types/getPosts';
 
 const HomePage = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  const handlePostSubmit = async (formdata: FormData, newPostData: Post) => {
+  const [posts, setPosts] = useState<Post[]>([]); // 初期値を空配列に設定
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const postThreads = await getAllPosts();
+      console.log(`postThreads: `, postThreads);
+      setPosts(postThreads);
+    };
+    fetchPosts();
+  }, []);
+  const handlePostSubmit = async (newPostData: Post) => {
+    insertPost(newPostData);
     setPosts([...posts, newPostData]);
-    await uploadFile(formdata);
   };
 
   return (
