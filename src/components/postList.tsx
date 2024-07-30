@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Post } from '../types/post';
-
-interface PostListProps {
-    posts: Post[];
-}
+import { PostListProps } from '@/types/PostListProps'
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
     return (
