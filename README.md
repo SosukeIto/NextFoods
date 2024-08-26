@@ -37,6 +37,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 =======
 課題
-・保存されている画像が読み込まれなかった
+.~~画像が読み込まれなかった~~ 解決（2024/8/1）
+・リリースまでに間に合わなかった（vercelわからなかった）
 ・css実装が間に合わなかった
 >>>>>>> 5512da258e52864262b894c8a0aebdab9a9184ad
